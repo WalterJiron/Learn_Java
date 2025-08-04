@@ -1,5 +1,5 @@
 /*
-    CLASE 5 - Uso de operadores ternarios
+    CLASE 6 - Uso de operadores ternarios
 
     ¿QUE ES EL OPERADOR TERNARIO?
         Es una forma compacta de escribir una estructura if-else en una sola linea.

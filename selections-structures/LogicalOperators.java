@@ -1,5 +1,5 @@
 /*
-    CLASE 4 - Uso de los operadores logicos en las estructuras de seleccion
+    CLASE 5 - Uso de los operadores logicos en las estructuras de seleccion
 
     ¿QUE SON LOS OPERADORES LOGICOS?
     Son simbolos que permiten combinar condiciones booleanas (true o false).

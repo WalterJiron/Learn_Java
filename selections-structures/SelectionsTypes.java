@@ -1,23 +1,65 @@
 /*
-    CLASE 3 - Tipos de seleccion en Java
+    CLASE 4 - Tipos de seleccion en Java
 
     ¿QUE SON LAS ESTRUCTURAS DE SELECCION?
     Son instrucciones que permiten que un programa tome decisiones.
-    Es decir, que elija ejecutar un bloque de codigo u otro dependiendo de si se cumple una condicion.
+    Es decir, que elija ejecutar un bloque de codigo u otro dependiendo de si se cumple una condicion (true o false).
 
     ¿PARA QUE SIRVEN?
-    - Para controlar el flujo del programa
-    - Para responder de forma distinta segun los datos de entrada
-    - Para comparar valores y ejecutar diferentes bloques de codigo
+        - Para controlar el flujo del programa
+        - Para responder de forma distinta segun los datos de entrada
+        - Para comparar valores y ejecutar diferentes bloques de codigo
 
     ¿CUANDO USARLAS?
-    - Cuando queres evaluar una situacion que puede tener una o varias respuestas posibles
+    Cuando queres evaluar una situacion que puede tener una o varias respuestas posibles
 
-    ESTRUCTURAS QUE VAMOS A VER:
-        - if (condicion)
-        - if ... else
-        - if ... else if ... else
-        - switch (variante de seleccion multiple)
+    TIPOS DE SELECCION:
+
+        1) SELECCION SIMPLE:
+           - Se utiliza solo un "if"
+           - El bloque de codigo solo se ejecuta si la condicion es verdadera
+           - Si la condicion es falsa, el programa simplemente sigue
+
+               Ejemplo:
+               if (edad >= 18) {
+                   System.out.println("Eres mayor de edad");
+               }
+
+        2) SELECCION DOBLE:
+           - Usa "if...else"
+           - Se ejecuta un bloque si la condicion es verdadera, o el otro si es falsa
+
+               Ejemplo:
+               if (nota >= 60) {
+                   System.out.println("Aprobado");
+               } else {
+                   System.out.println("Reprobado");
+               }
+
+        3) SELECCION MULTIPLE:
+           - Usa "if...else if...else" o "switch"
+           - Permite manejar varias condiciones posibles
+
+               Ejemplo con if...else if:
+               if (nota >= 90) {
+                   System.out.println("Excelente");
+               } else if (nota >= 70) {
+                   System.out.println("Aprobado");
+               } else {
+                   System.out.println("Reprobado");
+               }
+
+               Ejemplo con switch:
+               switch (opcion) {
+                   case 1:
+                       System.out.println("Lunes");
+                       break;
+                   case 2:
+                       System.out.println("Martes");
+                       break;
+                   default:
+                       System.out.println("Opcion invalida");
+               }
 
     OPERADORES DE COMPARACION MAS USADOS:
         1) ==  igual
@@ -27,6 +69,7 @@
         5) >=  mayor o igual
         6) <=  menor o igual
 */
+
 
 import java.util.Scanner;
 
