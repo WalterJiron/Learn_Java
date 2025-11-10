@@ -36,10 +36,11 @@ public class AdvancedValidations {
 
             // Para que se limple el buffer
             if (contedad > 1) {
-                scanner.nextLine();
+                scanner.next();
             }
 
             if (scanner.hasNextInt()) {
+
                 edad = scanner.nextInt();
 
                 // Miramos que la edad no sea mayor que 0 para mostrar un error
@@ -69,7 +70,7 @@ public class AdvancedValidations {
 
             } else {
                 System.out.println("Error: debe ingresar un numero entero.");
-                scanner.next(); // limpiar entrada incorrecta
+                scanner.nextLine(); // limpiar entrada incorrecta
             }
         }
 
