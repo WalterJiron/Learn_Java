@@ -64,7 +64,6 @@ Las estructuras de selección permiten que el programa tome **decisiones** basad
 | Ejercicio 8  | `Exercise8.java`  |
 | Ejercicio 9  | `Exercise9.java`  |
 | Ejercicio 10 | `Exercise10.java` |
-| Ejemplos adicionales | `Ejes.java` |
 
 ---
 
