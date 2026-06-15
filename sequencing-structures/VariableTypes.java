@@ -39,6 +39,23 @@
        - De instancia
        - Estaticas (de clase)
     6) Inferencia de tipo con var (Java 10+)
+    7) Clasificación de variables según su función o rol en el algoritmo:
+       - Variables de trabajo (o auxiliares)
+       - Variables acumuladoras
+       - Variables contadoras
+
+    REGLAS Y CONCEPTOS CLAVE:
+    - Naming Convention (Nomenclatura): En Java se usa camelCase para variables (ej. miVariableDeTrabajo).
+    - Inicialización Obligatoria y Valores por defecto: 
+      * Las variables locales NO tienen un valor por defecto. Es obligatorio inicializarlas antes de usarlas.
+      * Las variables de instancia o estáticas (declaradas a nivel de clase) SÍ tienen valores por defecto
+        (0 para enteros, 0.0 para decimales, false para booleans, y null para objetos/referencias).
+    - Conversión de tipos (Casting):
+      * Implícito (Widening): Conversión automática de un tipo más pequeño a uno más grande (ej. de int a double). No hay pérdida de datos.
+      * Explícito (Narrowing): Conversión manual requerida para pasar de un tipo más grande a uno más chico (ej. de double a int).
+        Se usa la sintaxis `(tipo) valor` y causa pérdida de precisión (los decimales se truncan).
+    - Memoria Stack vs Heap: Los tipos primitivos y las referencias a objetos se guardan en el Stack
+      (pila de ejecución rápida). Los objetos (como cadenas String y arreglos) residen en el Heap (área de memoria dinámica).
 */
 
 public class VariableTypes {
@@ -47,6 +64,11 @@ public class VariableTypes {
     // Se declara fuera de cualquier metodo, dentro de la clase.
     // Pertenece a una instancia del objeto, y cada objeto tiene su propia copia.
     String mesagge = "Hola desde la instancia";
+
+    // Campos sin inicializar para demostrar valores por defecto:
+    int enteroPorDefecto;
+    boolean booleanPorDefecto;
+    String referenciaPorDefecto;
 
     // ========== 5) VARIABLE ESTATICA ==========
     // Tambien esta fuera de metodos, pero con la palabra clave "static".
@@ -90,6 +112,44 @@ public class VariableTypes {
         var promedio = 89.5;                 // tipo double
         var aprobado = true;                 // tipo boolean
 
+        // ========== 7) ROLES DE VARIABLES EN ALGORITMOS ==========
+        // Las variables también se clasifican según su rol lógico o función al resolver un problema:
+
+        // A) Variable de Trabajo (Auxiliar)
+        // Almacena valores intermedios o temporales necesarios para realizar cálculos.
+        double subtotal = 150.0;
+        double tasaImpuesto = 0.15;
+        double valorImpuesto = subtotal * tasaImpuesto; // Variable de trabajo: almacena un paso intermedio
+        double totalApagar = subtotal + valorImpuesto;
+
+        // B) Variable Acumuladora
+        // Acumula valores de forma progresiva. Su valor final es la suma de los valores anteriores más uno nuevo.
+        // ¡Importante! Siempre debe ser inicializada (normalmente en 0 para sumas o 1 para multiplicaciones).
+        double bolsaAhorro = 0.0;       // Inicialización
+        bolsaAhorro = bolsaAhorro + 10.0; // bolsaAhorro ahora vale 10.0
+        bolsaAhorro = bolsaAhorro + 25.5; // bolsaAhorro ahora vale 35.5
+        bolsaAhorro += 15.0;            // bolsaAhorro ahora vale 50.5 (usando operador +=)
+
+        // C) Variable Contadora
+        // Cuenta el número de veces que se realiza una acción o sucede un evento.
+        // Su valor se incrementa (o decrementa) en una cantidad fija constante (normalmente 1).
+        int contadorVistas = 0;         // Inicialización
+        contadorVistas = contadorVistas + 1; // contadorVistas vale 1
+        contadorVistas++;               // contadorVistas vale 2 (usando operador ++)
+
+        // ========== 8) DEMOSTRACIÓN DE CASTING (CONVERSIÓN DE TIPOS) ==========
+        // Casting Implícito (Widening): de menor a mayor capacidad
+        int enteroOriginal = 42;
+        double decimalAutomatico = enteroOriginal; // int se convierte a double automáticamente (42.0)
+
+        // Casting Explícito (Narrowing): de mayor a menor capacidad, requiere cast (tipo)
+        double estaturaOriginal = 1.75;
+        int estaturaTruncada = (int) estaturaOriginal; // se pierde la parte decimal, queda 1
+
+        // ========== 9) VARIABLES CON VALORES POR DEFECTO ==========
+        // Creamos una instancia de esta clase para poder leer sus variables de instancia no inicializadas
+        VariableTypes pruebaValores = new VariableTypes();
+
         // ========== IMPRIMIENDO LOS VALORES ==========
         // Para imprimir en Java se utiliza el objeto reservado System.out.println, System.out.print o System.out.printf()
         System.out.println("Nombre: " + nombre);
@@ -107,6 +167,22 @@ public class VariableTypes {
         System.out.println("Total de notas: " + totalNotas);
         System.out.println("Promedio: " + promedio);
         System.out.println("Aprobado: " + aprobado);
+
+        // ========== IMPRIMIENDO ROLES DE VARIABLES ==========
+        System.out.println("Impuesto de Trabajo: " + valorImpuesto);
+        System.out.println("Total Calculado: " + totalApagar);
+        System.out.println("Ahorro Acumulado: " + bolsaAhorro);
+        System.out.println("Vistas Contadas: " + contadorVistas);
+
+        // ========== IMPRIMIENDO CASTING Y VALORES POR DEFECTO ==========
+        System.out.println("\n--- Casting ---");
+        System.out.println("Decimal automático (implícito): " + decimalAutomatico);
+        System.out.println("Estatura truncada (explícito): " + estaturaTruncada);
+
+        System.out.println("\n--- Valores por Defecto ---");
+        System.out.println("Entero por defecto: " + pruebaValores.enteroPorDefecto);
+        System.out.println("Boolean por defecto: " + pruebaValores.booleanPorDefecto);
+        System.out.println("Referencia por defecto: " + pruebaValores.referenciaPorDefecto);
 
         // ========== USO DE VARIABLE ESTATICA ==========
         System.out.println("Contador Global: " + contadorGlobal);

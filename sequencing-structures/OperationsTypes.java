@@ -1,17 +1,53 @@
 /*
     CLASE 3 - Tipos de operadores en Java
 
-    ¿QUE SON LOS OPERADORES?
-    Son simbolos que permiten realizar operaciones entre variables o valores.
-    Existen varios tipos, cada uno con su proposito.
+    ¿QUÉ SON LOS OPERADORES?
+    Son símbolos que permiten realizar operaciones aritméticas, lógicas o de comparación 
+    entre variables o valores.
 
     TIPOS DE OPERADORES QUE VAMOS A VER:
+        1) Aritméticos      -> Operaciones matemáticas (+, -, *, /, %, ++, --)
+        2) Relacionales     -> Comparaciones (devuelven boolean: >, <, ==, !=, >=, <=)
+        3) Lógicos          -> Combinan condiciones (&&, ||, !)
+        4) Asignación       -> Asignan y actualizan valores (=, +=, -=, *=, /=, %=)
+        5) Concatenación    -> Unen cadenas de texto (+)
 
-        1) Aritmeticos  ->  Operaciones matematicas
-        2) Relacionales ->  Comparaciones (devuelven true o false)
-        3) Logicos  ->  Combinan condiciones (se usan en if)
-        4) Asignacion   ->  Asignan valores
-        5) Concatenacion    ->  Unen cadenas de texto
+    CONCEPTOS CLAVE COMPLEMENTARIOS:
+
+    A) PRECEDENCIA DE OPERADORES:
+       Determina el orden en el que Java evalúa una expresión mixta. El orden de mayor a menor prioridad es:
+       1. Paréntesis `()` (¡Siempre evalúan primero!)
+       2. Incremento/Decremento unario y negación (`++`, `--`, `!`)
+       3. Multiplicación, División y Residuo (`*`, `/`, `%`)
+       4. Suma y Resta (`+`, `-`)
+       5. Relacionales (`>`, `>=`, `<`, `<=`)
+       6. Igualdad (`==`, `!=`)
+       7. Lógico AND (`&&`)
+       8. Lógico OR (`||`)
+       9. Asignaciones y operaciones compuestas (`=`, `+=`, `-=`, etc.)
+
+    B) EVALUACIÓN DE CORTOCIRCUITO (Short-Circuit Evaluation):
+       Los operadores lógicos `&&` y `||` son eficientes al evaluar condiciones:
+       - Para `&&` (AND): Si el primer operando es false, el resultado final será false de todos modos,
+         por lo que Java NO evalúa el segundo operando.
+       - Para `||` (OR): Si el primer operando es true, el resultado final será true de todos modos,
+         por lo que Java NO evalúa el segundo operando.
+
+    C) INCREMENTO Y DECREMENTO (Prefijo vs Postfijo):
+       - `x++` (Post-incremento): Devuelve el valor original de `x` y LUEGO incrementa `x` en 1.
+       - `++x` (Pre-incremento): Incrementa `x` en 1 primero, y LUEGO devuelve el nuevo valor de `x`.
+
+    D) DIVISIÓN POR CERO:
+       - En números enteros: Dividir por 0 (ej. 10 / 0) provoca un error de ejecución inmediato
+         llamado `ArithmeticException: / by zero`.
+       - En números decimales: Dividir por 0.0 (ej. 10.0 / 0.0) NO da error, sino que produce valores especiales
+         definidos por el estándar IEEE 754: `Infinity`, `-Infinity` o `NaN` (Not a Number, por ejemplo al dividir 0.0 / 0.0).
+
+    E) ORDEN EN CONCATENACIÓN DE TEXTO:
+       - La evaluación de la suma (+) ocurre de izquierda a derecha.
+       - Si el primer operando es numérico y el segundo también, se realiza la suma matemática.
+       - En cuanto se encuentra una cadena String, el operador + pasa a comportarse como concatenador de texto,
+         e interpreta todo el resto de valores siguientes como texto.
 */
 
 import java.util.Scanner;
@@ -50,6 +86,12 @@ public class OperationsTypes {
         */
 
         System.out.println("Residuo: " + (a % b)); // 1
+
+        // Demostración de División por Cero
+        double divisionPorCeroDouble = (double) a / 0.0;
+        System.out.println("Division por 0.0 (double): " + divisionPorCeroDouble); // Imprime Infinity
+        System.out.println("Division de 0.0 / 0.0 (double): " + (0.0 / 0.0));     // Imprime NaN
+        // Nota: Si intentáramos "a / 0" con enteros, el programa fallaría con una ArithmeticException.
 
 
         // === 2. OPERADORES RELACIONALES (devuelven boolean) ===
@@ -127,8 +169,49 @@ public class OperationsTypes {
             Si uno de los elementos es String, Java convierte lo demas a texto automaticamente.
         */
 
-        String nombre = "\nWalter";
-        String saludo = "Hola, " + nombre + "!";
+        String nombre = "Walter";
+        String saludo = "\nHola, " + nombre + "!";
         System.out.println(saludo);
+
+        // Demostración del orden de evaluación en la concatenación:
+        // Evaluado de izquierda a derecha: 5 + 5 se suma matemáticamente (= 10), luego se concatena con el String.
+        System.out.println("5 + 5 + \" texto\" = " + (5 + 5 + " texto")); // Imprime "10 texto"
+        
+        // Evaluado de izquierda a derecha: "texto " + 5 se convierte en String ("texto 5"), luego + 5 da ("texto 55").
+        System.out.println("\"texto \" + 5 + 5 = " + ("texto " + 5 + 5)); // Imprime "texto 55"
+
+        // === 6. OPERADORES DE INCREMENTO Y DECREMENTO (PREFIJO VS POSTFIJO) ===
+        int c = 5;
+        System.out.println("\n--- Operadores de Incremento ---");
+        System.out.println("Valor inicial de c: " + c);
+        
+        // Post-incremento (c++): Primero se usa el valor en la expresión, luego se incrementa la variable.
+        System.out.println("c++ (post-incremento): " + (c++)); // Imprime 5, pero c pasa a ser 6
+        System.out.println("Valor de c despues de c++: " + c); // Imprime 6
+
+        // Pre-incremento (++c): Primero se incrementa la variable, luego se usa el valor en la expresión.
+        System.out.println("++c (pre-incremento): " + (++c));   // c pasa a ser 7, imprime 7
+        System.out.println("Valor de c despues de ++c: " + c); // Imprime 7
+
+        // === 7. PRECEDENCIA DE OPERADORES ===
+        System.out.println("\n--- Precedencia de Operadores ---");
+        // La multiplicación (*) tiene mayor prioridad que la suma (+):
+        int resultadoSinParentesis = 5 + 3 * 2;   // 5 + (3 * 2) = 11
+        int resultadoConParentesis = (5 + 3) * 2; // (8) * 2 = 16
+        System.out.println("Resultado de 5 + 3 * 2 = " + resultadoSinParentesis);
+        System.out.println("Resultado de (5 + 3) * 2 = " + resultadoConParentesis);
+
+        // === 8. EVALUACIÓN DE CORTOCIRCUITO LÓGICO ===
+        System.out.println("\n--- Evaluación de Cortocircuito ---");
+        boolean condicion1 = false;
+        boolean condicion2 = true;
+        
+        // En un AND (&&), si el primer valor es false, el segundo no se evalúa (porque el resultado ya es false).
+        boolean resultadoAnd = condicion1 && condicion2;
+        System.out.println("condicion1 && condicion2 = " + resultadoAnd);
+
+        // En un OR (||), si el primer valor es true, el segundo no se evalúa (porque el resultado ya es true).
+        boolean resultadoOr = condicion2 || condicion1;
+        System.out.println("condicion2 || condicion1 = " + resultadoOr);
     }
 }

@@ -2,18 +2,38 @@
     CLASE 11 - Validaciones avanzadas de entradas con Scanner
 
     OBJETIVO:
-    Aprender a validar correctamente los distintos tipos de datos que se ingresan por teclado.
+    Aprender a validar correctamente los distintos tipos de datos que se ingresan por teclado,
+    aplicando técnicas profesionales de control de flujo y procesamiento de cadenas.
 
     ¿POR QUÉ VALIDAR?
-        - Para evitar errores o bloqueos si el usuario ingresa datos inesperados
-        - Para mejorar la experiencia del usuario y controlar el flujo del programa
-        - Para asegurarte que los datos cumplen condiciones logicas o de formato
+        - Para evitar errores o bloqueos si el usuario ingresa datos inesperados.
+        - Para mejorar la experiencia del usuario y controlar el flujo del programa.
+        - Para asegurarte de que los datos cumplen condiciones lógicas o de formato.
+
+    NORMALIZACIÓN DE CADENAS:
+    Cuando el usuario ingresa texto libre (ej. "Si", "SI", "sI"), las comparaciones
+    directas con .equals() pueden fallar si el texto tiene distintas mayúsculas o espacios.
+    La solución es NORMALIZAR el texto antes de compararlo:
+        - .trim()         -> Elimina espacios en blanco al inicio y al final.
+        - .toLowerCase()  -> Convierte todo a minúsculas para una comparación uniforme.
+    Ejemplo: `respuesta.toLowerCase().trim().equals("si")`
+    Esto aceptará "SI", "Si", " si ", etc. como respuestas válidas.
+
+    EXPRESIONES REGULARES (Regex):
+    Una expresión regular es un patrón que describe el formato que debe tener un texto.
+    En Java, el método `.matches("patron")` de la clase String devuelve true si el texto
+    completo coincide con el patrón dado.
+    Ejemplo de patrón usado en esta clase:
+        "[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*"
+        - [a-zA-ZáéíóúÁÉÍÓÚñÑ]+  -> Una o más letras (incluyendo acentos y ñ).
+        - ( [a-zA-Z...]+)*         -> Cero o más grupos de: UN espacio seguido de más letras.
+    Esto acepta "Juan", "Maria Jose", pero rechaza "123", "Pedro_Lopez", "a  b".
 
     VALIDACIONES CUBIERTAS:
-        1) int    -> Numero entero positivo
-        2) double -> Numero decimal mayor o igual a cero
-        3) boolean -> Solo acepta true o false (y controla errores)
-        4) String -> No puede estar vacío, puede tener restricciones personalizadas
+        1) int     -> Número entero positivo con confirmación.
+        2) double  -> Número decimal mayor o igual a cero.
+        3) boolean -> Solo acepta true o false.
+        4) String  -> No puede estar vacío y debe seguir un formato de nombre.
 */
 
 package Validations.with_if;
@@ -34,7 +54,8 @@ public class AdvancedValidations {
 
             System.out.print("Ingrese su edad (entero positivo): ");
 
-            // Para que se limple el buffer
+            // Limpiamos el buffer del Scanner desde la segunda vuelta en adelante.
+            // Si no lo hacemos, el scanner intentaría leer el mismo dato inválido repetidamente.
             if (contedad > 1) {
                 scanner.next();
             }
@@ -121,9 +142,10 @@ public class AdvancedValidations {
             System.out.print("Ingrese su nombre: ");
             nombre = scanner.nextLine();
 
-            // Usamos una exprecion regular para que siga el formato de un nombre
+            // Usamos una expresión regular (Regex) para validar que el formato del nombre
+            // solo contenga letras (incluyendo acentuadas y ñ) separadas por un único espacio.
             if (!nombre.trim().matches("([a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*)")) {
-                System.out.println("\nSolo puedes ingrsar letras y un espacios por nombre u aplleido\n");
+                System.out.println("\nSolo puedes ingresar letras y un espacio por nombre o apellido.\n");
                 continue;
             }
 

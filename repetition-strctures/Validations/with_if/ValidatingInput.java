@@ -1,19 +1,33 @@
 /*
-    CLASE 10 - Validacion de entradas numericas en Java
+    CLASE 10 - Validación de entradas numéricas en Java
 
     OBJETIVO:
-        Aprender a controlar que el usuario ingrese valores numericos correctos.
-        Esto evita que el programa se bloquee o lance errores si el input no es valido.
+        Aprender a controlar que el usuario ingrese valores numéricos correctos.
+        Esto evita que el programa se bloquee o lance errores si el input no es válido.
 
-    PROBLEMA COMUN:
-        - Si usas scanner.nextInt() y el usuario escribe texto, el programa lanza excepcion
-        - Para evitarlo, usamos scanner.hasNextInt() o hasNextDouble() antes de leer
+    PROBLEMA COMÚN:
+        Si usas `scanner.nextInt()` y el usuario escribe texto (ej. "abc"),
+        el programa lanza una `InputMismatchException` y se detiene abruptamente.
+        Para evitarlo, usamos `scanner.hasNextInt()` o `scanner.hasNextDouble()`
+        ANTES de leer, para verificar que el dato en el buffer sea del tipo esperado.
 
-    FLUJO:
-        1. Mostrar mensaje
-        2. Verificar si lo que se escribio es un numero valido
-        3. Si no lo es -> mostrar mensaje de error y pedirlo de nuevo
-        4. Si es valido -> leer y continuar
+    EL BUFFER DEL SCANNER:
+        El Scanner funciona con un "buffer" (memoria temporal). Cuando el usuario
+        escribe algo y presiona Enter, ese texto queda en el buffer esperando ser leído.
+        Si llamamos a `scanner.nextInt()` y el texto en el buffer NO es un entero,
+        la lectura falla PERO el texto incorrecto sigue en el buffer.
+        Esto provoca que en la siguiente iteración del bucle, el scanner intente
+        leer lo mismo de nuevo -> ¡bucle infinito!
+
+        LA SOLUCIÓN: Llamar a `scanner.next()` (o `scanner.nextLine()`) después
+        del error para LIMPIAR el buffer y descartar el texto inválido.
+        De esta forma, en la siguiente iteración el usuario puede escribir de nuevo.
+
+    FLUJO DE VALIDACIÓN CORRECTO:
+        1. Mostrar mensaje al usuario.
+        2. Verificar con hasNextInt() / hasNextDouble() si el dato es válido.
+        3. Si NO es válido -> mostrar error, limpiar buffer con scanner.next() y reintentar.
+        4. Si es válido -> leer con nextInt() / nextDouble() y continuar.
 */
 package Validations.with_if;
 

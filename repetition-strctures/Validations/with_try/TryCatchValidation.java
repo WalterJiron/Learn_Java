@@ -3,27 +3,50 @@
 
     OBJETIVO:
     Aprender a validar entradas del usuario utilizando manejo de excepciones (try-catch)
-    y entender por que es una herramienta poderosa y profesional.
+    y entender por qué es una herramienta poderosa y profesional en comparación
+    con el enfoque de `hasNextInt()` / `hasNextDouble()`.
 
-    ¿QUE ES UNA EXCEPCION?
-        - Es un error que ocurre en tiempo de ejecucion.
-        - Si no se controla, puede hacer que el programa se detenga inesperadamente.
+    ¿QUÉ ES UNA EXCEPCIÓN?
+        Una excepción (Exception) es un evento anormal que interrumpe el flujo
+        normal de un programa durante su ejecución. Si no se controla (no se "atrapa"),
+        el programa imprime un error en pantalla y se termina abruptamente.
 
-    ¿PARA QUE SIRVE try-catch?
-        - Permite atrapar errores y seguir ejecutando el programa de forma segura.
-        - Se usa cuando el codigo que estas por ejecutar y puede fallar.
+    TIPOS DE EXCEPCIONES RELEVANTES AQUÍ:
+        - InputMismatchException: El Scanner no pudo convertir el texto ingresado
+          al tipo de dato esperado (ej. el usuario escribió "hola" cuando se esperaba un int).
+        - NumberFormatException: Ocurre al intentar convertir manualmente un String
+          a número con `Integer.parseInt()` o `Double.parseDouble()`, si el texto no es válido.
 
-    SINTAXIS BASICA:
+    ¿PARA QUÉ SIRVE try-catch?
+        Permite "atrapar" (catch) un error que ocurrió en el bloque `try` y
+        ejecutar un código alternativo de recuperación en el bloque `catch`,
+        de forma que el programa no se detenga y pueda seguir funcionando.
 
+    SINTAXIS BÁSICA:
         try {
-            // Codigo que puede lanzar una excepcion
-        } catch (TipoDeExcepcion nombreVariable) {
-            // Codigo para manejar el error
+            // Código que PUEDE fallar
+        } catch (TipoDeExcepcion e) {
+            // Código que se ejecuta SI ocurre el error
+            // 'e' contiene información sobre el error (ej. e.getMessage())
         }
 
-    NOTA:
-        En este caso usamos InputMismatchException para detectar cuando el usuario
-        escribe un dato que no corresponde al tipo esperado (por ejemplo: letras en vez de numeros).
+    ¡PELIGRO! EL BUCLE INFINITO EN EL CATCH:
+    Cuando se lanza una InputMismatchException, el texto inválido del buffer
+    del Scanner NO se consume automáticamente. Si en el bloque `catch` no
+    limpiamos el buffer con `scanner.nextLine()`, en la siguiente iteración del
+    bucle el Scanner encontrará el mismo texto inválido, volverá a lanzar la
+    excepción, y así indefinidamente -> ¡bucle infinito!
+
+    La solución SIEMPRE es limpiar el buffer en el catch:
+        catch (InputMismatchException e) {
+            System.out.println("Dato inválido.");
+            scanner.nextLine(); // ← INDISPENSABLE: limpia el buffer
+        }
+
+    VENTAJA vs hasNextInt():
+    El enfoque try-catch maneja automáticamente la conversión. El código en
+    el bloque `try` es más limpio y directo (sin el `if` de verificación previo).
+    Es el estilo preferido en código Java profesional.
 */
 package Validations.with_try;
 
